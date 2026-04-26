@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Klass Dasturi Flyer</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #333;
+            display: flex;
+            justify-content: space-evenly;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        /* Flyer Canvas - A4 Proportions */
+        .flyer-container {
+            width: 850px;
+            height: 1200px;
+            background-color: #e8f5e9; /* Light green background */
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .flyer-container2 {
+            width: 850px;
+            height: 1200px;
+            background-color: #ffffff; /* White background for back */
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Section */
+        .header {
+            background: linear-gradient(135deg, #0f766e, #042f2e);
+            color: white;
+            padding: 45px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 8px solid #d97706;
+        }
+
+        /* Background Text Pattern */
+        .bg-text {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1;
+            color: rgba(255, 255, 255, 0.04);
+            text-align: justify;
+            text-transform: uppercase;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-size: 34px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            color: #ffffff;
+        }
+
+        .header h2 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #fcd34d;
+            text-transform: uppercase;
+        }
+
+        /* Main Content Layout */
+        .content {
+            display: flex;
+            flex: 1;
+            padding: 40px 30px;
+            background-image: radial-gradient(rgba(0,0,0,0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: #0f766e;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Schedule specific (Back Page) */
+        .schedule-wrapper {
+            width: 90%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .schedule-box {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-left: 6px solid #d97706;
+            width: 100%;
+        }
+
+        .schedule-item {
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .schedule-item .time {
+            font-weight: 800;
+            color: #b45309;
+            font-size: 18px;
+        }
+
+        .schedule-item .event {
+            color: #334155;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .location-badge {
+            display: inline-block;
+            background: #0f766e;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        /* Speakers Layout (Front Page) */
+        .speakers-col {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            align-content: start;
+        }
+
+        .speaker-card {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 60px 15px 15px 60px;
+            padding: 8px 15px 8px 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s;
+            height: 100%;
+        }
+
+        .speaker-img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: top center; /* Fixes cropped heads */
+            border: 3px solid #0f766e;
+            background-color: #f1f5f9;
+            flex-shrink: 0;
+        }
+
+        .speaker-info {
+            margin-left: 15px;
+        }
+
+        .speaker-name {
+            font-size: 15px;
+            font-weight: 800;
+            color: #0f766e;
+            margin-bottom: 2px;
+        }
+
+        .speaker-title {
+            font-size: 11px;
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .speaker-topic {
+            font-size: 12px;
+            color: #1e293b;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .speaker-topic span {
+            color: #b45309;
+            font-weight: 800;
+        }
+        
+        .full-width-title {
+            grid-column: 1 / -1;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="flyer-container">
+        <div class="header">
+            <div class="bg-text">
+                LANGUAGE FOR THE FUTURE LANGUAGE FOR THE FUTURE LANGUAGE FOR THE FUTURE 
+                LANGUAGE FOR THE FUTURE LANGUAGE FOR THE FUTURE LANGUAGE FOR THE FUTURE
+                LANGUAGE FOR THE FUTURE LANGUAGE FOR THE FUTURE LANGUAGE FOR THE FUTURE
+            </div>
+            <div class="header-content">
+                <h1>Language for the Future Loyihasi</h1>
+                <h2>O'qitishning Innovatsion Texnologiyalari</h2>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="speakers-col">
+                <div class="full-width-title">
+                    <h3 class="section-title">Master Klass Spikerlari</h3>
+                </div>
+
+                <div class="speaker-card">
+                    <img src="./oybek-karimovich-ergashev_tJFVDGOc.jpg" class="speaker-img" alt="Ergashev Oybek">
+                    <div class="speaker-info">
+                        <div class="speaker-name">Ergashev Oybek Karimovich</div>
+                        <div class="speaker-title">Kimyo fanlari doktori, professor</div>
+                        <div class="speaker-topic"><span>Mavzu:</span> Innovatsion pedagogik texnologiyalar asosida ta’limni tashkil etish</div>
+                    </div>
+                </div>
+
+                <div class="speaker-card">
+                    <img src="./abduvali-akramov-mamatxanovich_zAiG8pvX.jpg" class="speaker-img" alt="Akramov Abduvali">
+                    <div class="speaker-info">
+                        <div class="speaker-name">Akramov Abduvali Mamatxanovich</div>
+                        <div class="speaker-title">O'quv ishlari bo'yicha prorektor, Texnika fanlari bo'yicha falsafa doktori</div>
+                        <div class="speaker-topic"><span>Mavzu:</span> Yangi pedagogik texnologiyalarning ta'lim tizimidagi o'rni</div>
+                    </div>
+                </div>
+
+                <div class="speaker-card">
+                    <img src="./xorijiy-tillar_zwdgi0pE.jpg" class="speaker-img" alt="Xoshimova Dildora">
+                    <div class="speaker-info">
+                        <div class="speaker-name">Xoshimova Dildora Madaminovna</div>
+                        <div class="speaker-title">Filologiya fanlari doktori, professor</div>
+                        <div class="speaker-topic"><span>Mavzu:</span> Ta'lim sifatini samarali oshirish usullari</div>
+                    </div>
+                </div>
+
+                <div class="speaker-card">
+                    <img src="photo_2_2026-04-15_08-58-10.jpg" class="speaker-img" alt="Raimjanova Nigora">
+                    <div class="speaker-info">
+                        <div class="speaker-name">Raimjanova Nigora Inamjanovna</div>
+                        <div class="speaker-title">Kafedra Dotsenti</div>
+                        <div class="speaker-topic"><span>Mavzu:</span> Gamification</div>
+                    </div>
+                </div>
+
+                <div class="speaker-card">
+                    <img src="./photo_2026-04-26_10-36-49.jpg" class="speaker-img" alt="Kariyeva Matlubaxon">
+                    <div class="speaker-info">
+                        <div class="speaker-name">Qoriyeva Matlubaxon Ahmadjonovna</div>
+                        <div class="speaker-title">Kafedra Katta O'qituvchisi</div>
+                        <div class="speaker-topic"><span>Mavzu:</span> Mustaqil ishlarni bajarishda Google Classroom platformasining pedagogik va texnologik afzalliklari</div>
+                    </div>
+                </div>
+
+                <div class="speaker-card">
+                    <img src="IMG_1397.jpg" class="speaker-img" alt="Katayeva Mukarama">
+                    <div class="speaker-info">
+                        <div class="speaker-name">Kattayeva Mukarama Maxmudovna</div>
+                        <div class="speaker-title">Kafedra Dotsenti</div>
+                        <div class="speaker-topic"><span>Mavzu:</span> Blended-learning, Flipped Learning</div>
+                    </div>
+                </div>
+
+                <div class="speaker-card">
+                    <img src="photo_1_2026-04-15_08-58-10.jpg" class="speaker-img" alt="Ismatullayeva Durdona">
+                    <div class="speaker-info">
+                        <div class="speaker-name">Ismatullayeva Durdona Amanjonovna</div>
+                        <div class="speaker-title">Kafedra O'qituvchisi</div>
+                        <div class="speaker-topic"><span>Mavzu:</span> CLIL texnologiyasi</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flyer-container">
+        <div class="header">
+            <div class="bg-text">
+                LANGUAGE FOR THE FUTURE LANGUAGE FOR THE FUTURE LANGUAGE FOR THE FUTURE 
+                LANGUAGE FOR THE FUTURE LANGUAGE FOR THE FUTURE LANGUAGE FOR THE FUTURE
+                LANGUAGE FOR THE FUTURE LANGUAGE FOR THE FUTURE LANGUAGE FOR THE FUTURE
+            </div>
+            <div class="header-content">
+                <h1>Language for the Future Loyihasi</h1>
+                <h2>O'qitishning Innovatsion Texnologiyalari</h2>
+            </div>
+        </div>
+        <div class="content" style="background-image: none;">
+            <div class="schedule-wrapper">
+                <div class="location-badge">📍 O'tkazilish joyi: NamDTU, Majlislar zali (7-bino)</div>
+                
+                <h3 class="section-title">Kun Tartibi</h3>
+                
+                <div class="schedule-box">
+                    <div class="schedule-item">
+                        <span class="time">9:00 - 9:30</span>
+                        <span class="event">Registratsiya</span>
+                    </div>
+                    <div class="schedule-item">
+                        <span class="time">9:30 - 9:40</span>
+                        <span class="event">Rektor O.K. Ergashev</span>
+                    </div>
+                    <div class="schedule-item">
+                        <span class="time">9:40 - 9:50</span>
+                        <span class="event">O'q. ishlari bo'yicha prorektor A.M. Akramov</span>
+                    </div>
+                    <div class="schedule-item">
+                        <span class="time">9:50 - 10:00</span>
+                        <span class="event">Kafedra Mudiri D.M. Xoshimova</span>
+                    </div>
+                    <hr style="border: 0; border-top: 1px dashed #cbd5e1; margin: 15px 0;">
+                    <div class="schedule-item">
+                        <span class="time">10:00 - 10:50</span>
+                        <span class="event">Asosiy Master Klasslar (Spikerlar)</span>
+                    </div>
+                    <hr style="border: 0; border-top: 1px dashed #cbd5e1; margin: 15px 0;">
+                    <div class="schedule-item">
+                        <span class="time">10:50 - 11:00</span>
+                        <span class="event">Yopilish Marosimi</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
